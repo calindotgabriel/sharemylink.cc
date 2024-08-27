@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+pnpm-debug.log
+dist
+.pnpm-store
+build
+yarn-error.log
+.git
+.gitignore
