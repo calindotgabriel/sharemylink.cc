@@ -3,6 +3,7 @@ import axios from "axios";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./NavBar";
+import config from "../config";
 
 interface ShortenLinkApiResponse {
   data: {
@@ -50,13 +51,16 @@ const ShareMyLink: React.FC = () => {
     fetchBackground();
   }, []);
 
+  console.log('maaai?');
+  console.log('api_url', config.API_URL);
+
   const handleShorten = async () => {
     console.log("handleShorten", { url });
     try {
       const response = await axios.post<
         ShortenLinkRequest,
         ShortenLinkApiResponse
-      >(`${process.env.REACT_APP_API_URL}/short-links`, {
+      >(`${config.API_URL}/short-links`, {
         linkToShort: url,
       });
       console.log("API Response:", response.data);

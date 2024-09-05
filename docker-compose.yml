@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - MONGO_CONNECTION_STRING=${MONGO_CONNECTION_STRING}
+      - PORT=8000
+    frontend:
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile
+      ports:
+        - "80:80"
+      depends_on:
+        - backend
+
+volumes:
+  node_modules:

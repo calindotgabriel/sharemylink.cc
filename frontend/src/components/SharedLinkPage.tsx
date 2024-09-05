@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import Navbar from "./NavBar";
+import { useParams, useNavigate } from "react-router-dom";
 
 interface BackgroundImage {
   url: string;
@@ -20,6 +20,7 @@ const SharedLinkPage: React.FC = () => {
   const [linkData, setLinkData] = useState<ShortLinkData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const [redirectCountdown, setRedirectCountdown] = useState<number | null>(5);
   const [redirectTimer, setRedirectTimer] = useState<NodeJS.Timeout | null>(
@@ -91,7 +92,12 @@ const SharedLinkPage: React.FC = () => {
         setLinkData(response.data);
       } catch (error) {
         console.error("Error fetching link data:", error);
-        setError("Failed to load link data");
+        // Check for a 404 error
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
+          navigate("/"); // Redirect to home if link not found
+        } else {
+          setError("Failed to load link data");
+        }
       } finally {
         setLoading(false);
       }
