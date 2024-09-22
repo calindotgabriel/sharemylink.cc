@@ -19,7 +19,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Expose port 4000 for the development server
-EXPOSE 4000
+EXPOSE 3000
 
 # Set environment variable for instant reload
 ENV CHOKIDAR_USEPOLLING=true
